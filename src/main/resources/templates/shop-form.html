@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>Web Shop Demo</title>
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet'>
+  
+  <link rel="stylesheet" type="text/css" href="/CSS/shop.css" />
+  <script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js">
+  </script>
+</head>
+<body>
+	<div class="top-row">
+		<a href="/shop">WEBSHOP DEMO</a> 
+
+		<span class="dropdown">
+        <span class="dropbtn">Products</span>
+          <span class="dropdown-content">
+            <a href="/shop?funct=prod&p=laptop">Laptops</a>
+            <br><a href="/shop?funct=prod&p=monitor">Monitors</a>
+            <br><a href="/shop?funct=prod&p=smartphone">Smartphones</a>
+          </span>
+        </span>
+
+        <span class="dropdown">
+        <span class="dropbtn">Web services</span>
+          <span class="dropdown-content">
+            <a href="/api">API demo</a>
+          </span>
+        </span>
+        
+        <span class="dropdown">
+        <span class="dropbtn">About site</span>
+          <span class="dropdown-content">
+            <a href="/contact">Contact</a>
+          </span>
+        </span>
+		
+		<form class="search_form" method="get" action="/shop" >
+		  <input type="hidden" name="funct" value="search">
+		  <input type="text" style="width: 120px;" name="p" th:value="${Search}" /> 
+		  <input type="submit" name="submit" value="search">
+		</form>
+		<span class="cart-link">
+		  <a href="#" id="cart"><i></i> CART <span class="badge" th:text="${session.cartQty}"/> </a>
+		</span>
+	</div>
+
+    <div class="sort">
+      sort results --- >>>
+      <a href="/shop?funct=sort&p=price">by price (low to high)</a>
+      <a href="/shop?funct=sort&p=brand">by brand</a>
+    </div>
+
+	<div class="shopping-cart" id="shopping-cart_id">
+		<ul th:each="item : ${session.items}">
+			<li class="clearfix" style="margin: -36px 1px -32px -22px;">
+				<p class="cart_item" th:utext="${item.getProduct().getName()} + ' - ' + ${item.getProduct().getBrand()} + '<br />' 
+				+' price: EUR ' + ${item.getProduct().getPrice()} + '<br />' 
+				+' qty: ' + ${item.getQuantity()}" />  
+			</li>
+		</ul>
+		<u><p class="total" th:text="'Total: '+${session.total}+' EUR'" /></u>
+		<div class="checkout" >
+		  <a href="/checkout" id="checkout_id">CHECK OUT</a>
+		</div>
+	</div>
+
+
+	<div class="clearfix">
+		<section th:tag="remove" th:unless="${#lists.isEmpty(shopProducts)}">
+			<div class="picture_box" th:each="product : ${shopProducts}">
+				<a th:href="@{'/details'(id=${product.id}, qty=0)}"> 
+				   <img class="prod_image" th:src="'/img/'+${product.id}+'.jpg'" /> <br>
+				   <span th:text="${product.name}" /> <br>
+				   <span th:text="${product.brand}" /> <br>
+				   <span th:text="${product.description}" /> <br>
+				   <u style="float: right; color: #520fb7e6;">
+				   <span th:text="${product.price}" /> EUR</u>
+				</a>
+			</div>
+		</section>
+	</div>
+		
+	<script src="/JS/cart.js">	</script>
+</body>
+</html>

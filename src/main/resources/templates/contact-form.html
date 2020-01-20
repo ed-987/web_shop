@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>Web Shop</title>
+
+  <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet'>
+
+  <link rel="stylesheet" type="text/css" href="/CSS/shop.css" />
+  <script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js">
+  </script>
+</head>
+<body>
+	<div class="top-row">
+		<a href="/shop">WEBSHOP DEMO</a> 
+		<span class="cart-link"> 
+		  <a href="#" id="cart"><i></i> CART <span class="badge" th:text="${session.cartQty}"/> </a>
+		</span>
+	</div>
+	
+	<div class="shopping-cart" id="shopping-cart_id">
+		<ul th:each="item : ${session.items}">
+			<li class="clearfix" style="margin: -36px 1px -32px -22px;">
+				<p class="cart_item" th:utext="${item.getProduct().getName()} + ' - ' + ${item.getProduct().getBrand()} + '<br />' 
+				+' price: EUR ' + ${item.getProduct().getPrice()} + '<br />' 
+				+' qty: ' + ${item.getQuantity()}" />  
+			</li>
+		</ul>
+		<u><p class="total" th:text="'Total: '+${session.total}+' EUR'" /></u>
+		<div class="checkout" >
+		  <a href="/checkout" id="checkout_id">CHECK OUT</a>
+		</div>
+	</div>
+	
+	<br>
+	<p class="contact_page">
+    <u>Contact page</u><br><br>
+    
+    contact developer: e10002001-0@yahoo.com<br><br>
+    
+    About developer:<br>
+    I've been working in IT business for several years.<br>
+    Recently started studying Java. This webshop demo is my 1st developed Java project.<br>
+    Apart from Java the following technologies used in this project:<br>
+    HTML5, JavaScript, JQuery, CSS, SQL <br><br>
+	
+	I learned Java self studying. After learning the principles of Object-oriented programming, it's more like programming in C but in an Object-oriented way.	
+	<br><br>
+	
+	Very useful material that I used for learning Java Web Programming:<br><br>
+	
+	<a href="https://www.youtube.com/channel/UCqaVsG0LaQqLFI_P3DPyfMA">https://www.youtube.com/channel/UCqaVsG0LaQqLFI_P3DPyfMA</a><br>
+	#ProgramozzOkosan - a Youtube video (in Hungarian language)<br><br>
+	
+	<a href="https://stackoverflow.com/">https://stackoverflow.com</a>
+	</p>
+	
+	<script src="/JS/cart.js"></script>
+</body>
+</html>

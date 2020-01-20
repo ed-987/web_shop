@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>Web Shop</title>
+
+  <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet'>
+
+  <link rel="stylesheet" type="text/css" href="/CSS/shop.css" />
+  <script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js">
+  </script>
+</head>
+<body>
+	<div class="top-row">
+		<a href="/shop">WEBSHOP DEMO</a> 
+		<span class="cart-link"> 
+		  <a href="#" id="cart"><i></i> CART <span class="badge" th:text="${session.cartQty}"/> </a>
+		</span>
+	</div>
+	
+	<div class="shopping-cart" id="shopping-cart_id">
+		<ul th:each="item : ${session.items}">
+			<li class="clearfix" style="margin: -36px 1px -32px -22px;">
+				<p class="cart_item" th:utext="${item.getProduct().getName()} + ' - ' + ${item.getProduct().getBrand()} + '<br />' 
+				+' price: EUR ' + ${item.getProduct().getPrice()} + '<br />' 
+				+' qty: ' + ${item.getQuantity()}" />  
+			</li>
+		</ul>
+		<u><p class="total" th:text="'Total: '+${session.total}+' EUR'" /></u>
+		<div class="checkout" >
+		  <a href="/checkout" id="checkout_id">CHECK OUT</a>
+		</div>
+	</div>
+	
+	<br>
+    <u>API demo page</u><br><br>
+    
+    This is an infomation page about demo REST API.<br><br>
+    
+    Send POST data package to /api<br>
+    data package should include: 'data=hello'<br>
+    response will be: 'hi'
+		
+	<script src="/JS/cart.js"></script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>Web Shop</title>
+
+  <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet'>
+
+  <link rel="stylesheet" type="text/css" href="/CSS/shop.css" />
+  <script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js">
+  </script>
+</head>
+<body>
+	<div class="top-row">
+		<a href="/shop">WEBSHOP DEMO</a> 
+		<span class="cart-link"> 
+		  <a href="#" id="cart"><i></i> CART <span class="badge" th:text="${session.cartQty}"/> </a>
+		</span>
+	</div>
+	
+	<div class="shopping-cart" id="shopping-cart_id">
+		<ul th:each="item : ${session.items}">
+			<li class="clearfix" style="margin: -36px 1px -32px -22px;">
+				<p class="cart_item" th:utext="${item.getProduct().getName()} + ' - ' + ${item.getProduct().getBrand()} + '<br />' 
+				+' price: EUR ' + ${item.getProduct().getPrice()} + '<br />' 
+				+' qty: ' + ${item.getQuantity()}" />  
+			</li>
+		</ul>
+		<u><p class="total" th:text="'Total: '+${session.total}+' EUR'" /></u>
+		<div class="checkout" >
+		  <a href="/checkout" id="checkout_id">CHECK OUT</a>
+		</div>
+	</div>
+
+   
+   <br><br>
+	<img class="detail_image" th:src="'/img/'+${product.id}+'.jpg'" />
+	<div class="detail_text">
+ 	 	<u><span th:text="${product.name}" /><br></u> 
+		Brand: <span th:text="${product.brand}" /><br> 
+		Description: <span th:text="${product.description}" /><br> 
+		Price: <span th:text="${product.price}" />EUR<br><br>
+		<form method="get" action="/details">
+			quantity: <input type="number" style="padding: 5px; font-size: 15px;" name="qty" min="1" max="5">
+			<input type="hidden" name="id" th:value="${product.id}"><br>
+			<button class="add_button" type="submit">Add to cart</button>
+		</form>
+	</div>			
+		
+	<script src="/JS/cart.js"></script>
+</body>
+</html>
