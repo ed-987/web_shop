@@ -4,7 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.model.Cart;
+import com.model.Item;
 import com.service.ShopService;
+
+import java.util.List;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpSession;
@@ -60,5 +66,16 @@ public class ShopController{
 		}
 		session.setAttribute("cartQty",qty);
 		return "shop-form";
+	}
+	
+	@GetMapping(value= {"/cart"})
+	@ResponseBody
+	public String emptyCart(ServletRequest request,HttpSession session) {
+		String funct=request.getParameter("funct");
+		session.setAttribute("items", new Cart().getItems());
+		session.setAttribute("cartQty",0);
+		session.setAttribute("total",0);
+		logger.debug("funct: {}", funct);
+		return "ok";
 	}
 }

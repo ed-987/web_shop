@@ -10,3 +10,20 @@ $(document).click(function(evt){
 		return;
 	$(".shopping-cart").hide();
 });
+
+document.getElementById("empty_cart").addEventListener("click", function() {
+	var request = new XMLHttpRequest();
+	request.open('GET', '/cart?funct=empty', true); 
+	request.onload= function(){
+	    if (request.readyState === 4) {
+	        if (request.status === 200) {
+	          console.log(request.responseText);
+	          location.reload();
+	        } else {
+	          console.error(request.statusText);
+	        }
+	      }
+	}
+	request.send(null); 
+	
+});
